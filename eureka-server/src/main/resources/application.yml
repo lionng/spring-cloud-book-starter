@@ -1,0 +1,23 @@
+# http://localhost:8761/
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: admin
+      password: admin
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false  #由于该应用为注册中心，所以设置为false,代表不详注册中心注册自己
+    fetch-registry: false  #由于注册中心的职责就是维护服务实例，它并不需要检索服务，所以也设置为false
+    service-url:
+      # 解决：eureka-server加入security做基础访问控制报错Batch update failure with HTTP status code 401; discarding 1 replication tasks
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+  server:
+    peer-node-read-timeout-ms: 500  # 默认200
+#    enable-self-preservation: false  # 快速移除已经失效的服务信息---只在开发环境使用，生产环境不推荐使用
+#    eviction-interval-timer-in-ms: 50000  # 清理间隔  默认 60000 毫秒
