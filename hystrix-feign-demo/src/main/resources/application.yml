@@ -20,3 +20,12 @@ management:
       exposure:
         # 默认info|health yml配置必须加''
         include:  '*'
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: '*'
+
+turbine:
+  app-config: hystrix-feign-demo
+  cluster-name-expression: new String('default')
+  combine-host-port: true
