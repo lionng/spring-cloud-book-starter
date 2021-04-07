@@ -15,6 +15,9 @@ eureka:
 
 #使用Zuul构建微服务网关
 zuul:
+  IpFilter:    #过滤器禁用-IpFilter的pre类型的过滤器禁用
+    pre:
+      disable: true
   #路由前缀
 #  prefix: /rest
   host:
@@ -37,3 +40,4 @@ zuul:
 ribbon:        #设置ribbon的超时时间小于zuul的超时时间
   ReadTimeout: 10000
   ConnectTimeout: 10000
+
