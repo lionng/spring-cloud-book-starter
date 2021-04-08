@@ -73,6 +73,8 @@ public class IpFilter extends ZuulFilter {
         // 在黑名单中禁用
         if (StringUtils.isNotBlank(ip) && blackIpList.contains(ip)) {
             logger.error("IpFilter black ip:{}", ip);
+            // 为了测试在过滤器中出现异常，进入异常过滤器
+//            System.out.println(2/0);
             ctx.setSendZuulResponse(false);
             ResponseData data = ResponseData.fail("非法请求 ", ResponseCode.NO_AUTH_CODE.getCode());
             ctx.setResponseBody(JSON.toJSONString(data));
