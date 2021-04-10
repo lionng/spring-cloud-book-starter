@@ -1,6 +1,11 @@
 spring:
   application:
     name: zuul-demo
+  #修改文件上传的大小限制,默认是1048576 bytes
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 server:
   port: 9000
 
@@ -12,6 +17,12 @@ eureka:
     prefer-ip-address: true  # 采用ip注册
     #  定义实例ID格式
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 #使用Zuul构建微服务网关
 zuul:
@@ -36,8 +47,15 @@ zuul:
     fsh-substitution:
       path: /api-local/**
       url: forward:/local
+  #开启重试机制
+  retryable: true
+  #Zuul自带的Debug功能
+  include-debug-header: true
 
 ribbon:        #设置ribbon的超时时间小于zuul的超时时间
-  ReadTimeout: 10000
+#  ReadTimeout: 10000
   ConnectTimeout: 10000
-
+  maxAutoRetries: 1
+  maxAutoRetriesNextServer: 3
+  okToRetryOnAllOperations: true
+  retryableStatusCodes: 500,404,502

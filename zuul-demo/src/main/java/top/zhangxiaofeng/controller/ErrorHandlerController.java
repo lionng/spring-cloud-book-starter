@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * 实现ErrorController以不推荐使用
+ * 实现ErrorController已不推荐使用
  */
 @RestController
 public class ErrorHandlerController implements ErrorController {
