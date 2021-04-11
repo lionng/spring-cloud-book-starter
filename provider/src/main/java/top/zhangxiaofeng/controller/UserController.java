@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
@@ -20,7 +21,8 @@ public class UserController {
     private String applicationName;
 
     @GetMapping("/user/hello")
-    public String hello() {
+    public String hello(HttpServletRequest request) {
+        logger.info("request header:{}", request.getHeader("X-Request-Foo"));
         logger.info("UserController hello port:{}", port);
         Date date = new Date();
         return "hello    applicationName:" + applicationName + "     port:" + port + "  date:" + date;

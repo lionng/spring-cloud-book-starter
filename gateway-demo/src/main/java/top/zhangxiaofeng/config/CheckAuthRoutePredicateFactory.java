@@ -8,6 +8,9 @@ import org.springframework.web.server.ServerWebExchange;
 
 import java.util.function.Predicate;
 
+/**
+ * 自定义路由断言工厂需要继承 AbstractRoutePredicateFactory 类，重写 apply 方法的逻辑。
+ */
 @Component
 public class CheckAuthRoutePredicateFactory extends AbstractRoutePredicateFactory<CheckAuthRoutePredicateFactory.Config> {
 

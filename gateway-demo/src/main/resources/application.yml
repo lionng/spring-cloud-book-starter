@@ -62,4 +62,10 @@ spring:
             - name: CheckAuth
               args:
                 name: yinjihuan  #http://localhost:10000/
+          filters:
+            - name: CheckAuth2
+              args:
+                name: 尹吉欢
+            - CheckAuth=yinjihuan,男
+
 
