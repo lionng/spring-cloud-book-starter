@@ -23,6 +23,24 @@ spring:
           enabled: true
           #调用默认服务名大写改为小写  http://localhost:10000/provider/user/hello
 #          lower-case-service-id: true
+
+      #跨域实战配置
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            exposedHeaders:
+              - content-type
+            allowedHeaders:
+              - content-type
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - OPTIONS
+              - PUT
+              - DELETE
+              - POST
+
       #路由配置
       routes:
         - id: path_route
