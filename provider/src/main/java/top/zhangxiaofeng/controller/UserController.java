@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 public class UserController {
 
@@ -20,7 +22,8 @@ public class UserController {
     @GetMapping("/user/hello")
     public String hello() {
         logger.info("UserController hello port:{}", port);
-        return "hello    applicationName:" + applicationName + "     port:" + port;
+        Date date = new Date();
+        return "hello    applicationName:" + applicationName + "     port:" + port + "  date:" + date;
     }
 
 }

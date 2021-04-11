@@ -1,0 +1,65 @@
+server:
+  port: 10000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true  # 采用ip注册
+    #定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+spring:
+  application:
+    name: gateway-demo
+  cloud:
+    gateway:
+      #开启 Gateway 服务注册中心服务发现
+      #开启之后我们就可以通过地址去访问服务了，格式如下：
+      #http://网关地址/服务名称(大写)/**    http://localhost:10000/PROVIDER/user/hello
+      discovery:
+        locator:
+          enabled: true
+          #调用默认服务名大写改为小写  http://localhost:10000/provider/user/hello
+#          lower-case-service-id: true
+      #路由配置
+      routes:
+        - id: path_route
+          uri: http://cxytiandi.com
+          predicates:
+            - Path=/course
+
+        #路由断言工厂  根据 Path 定义好的规则来判断访问的 URI 是否匹配。
+        - id: path_route2
+          uri: http://cxytiandi.com
+          predicates:
+            - Path=/blog/**
+
+        #Query 路由断言工厂  Query 路由断言工厂接收两个参数，一个必需的参数和一个可选的正则表达式。
+        # 如果请求包含一个值与 ba 匹配的 foo 查询参数，则此路由将匹配。bar 和 baz 也会匹配，因为第二个参数是正则表达式。
+        - id: query_route
+          uri: http://cxytiandi.com
+          predicates:
+            - Query=foo, ba.  #http://localhost:10000/?foo=ba1
+
+        #Method 路由断言工厂 Method 路由断言工厂接收一个参数，即要匹配的 HTTP 方法。
+        - id: method_route
+          uri: https://www.baidu.com
+          predicates:
+            - Method=GET  #http://localhost:10000/
+
+        #Header 路由断言工厂 Header 路由断言工厂接收两个参数，分别是请求头名称和正则表达式。
+        - id: header_route
+          uri: http://example.org
+          predicates:
+            - Header=X-Request-Id, \d+  #如果请求中带有请求头名为 x-request-id，其值与 \d+ 正则表达式匹配（值为一个或多个数字），则此路由匹配。  http://localhost:10000/
+
+        #自定义路由断言工厂 自定义路由断言工厂需要继承 AbstractRoutePredicateFactory 类，重写 apply 方法的逻辑。
+        - id: customer_route
+          uri: http://cxytiandi.com
+          predicates:
+            - name: CheckAuth
+              args:
+                name: yinjihuan  #http://localhost:10000/
+
