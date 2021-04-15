@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: sleuth-consumer
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1.0  #抽样采集数据,开发中取1.0,所有,生产环节0.1,取十分之一
+    web:
+      #以下都是默认过滤的
+      skip-pattern: /api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|
+        /mappings|/trace|/swagger.*|.*\.png|.*\.css|.*\.js|.*\.html|/favicon.ico|
+        /hystrix.stream|/application/.*|/actuator.*|/cloudfoundryapplication
+server:
+  port: 18082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true  # 采用ip注册
+    #  定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 默认info|health yml配置必须加''
+        include:  '*'
