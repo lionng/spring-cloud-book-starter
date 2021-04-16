@@ -1,8 +1,31 @@
 spring:
   application:
     name: sleuth-provider
-#  zipkin:
-#    base-url: http://127.0.0.1:9411
+  zipkin:
+    sender:
+      type: rabbit
+  #    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1.0  #抽样采集数据,开发中取1.0,所有,生产环节0.1,取十分之一
+    web:
+      #以下都是默认过滤的
+      skip-pattern: /api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|
+        /mappings|/trace|/swagger.*|.*\.png|.*\.css|.*\.js|.*\.html|/favicon.ico|
+        /hystrix.stream|/application/.*|/actuator.*|/cloudfoundryapplication
+  rabbitmq:
+    host: 112.126.79.234
+    port: 5672
+    username: admin
+    password: admin
+    listener:
+      direct:
+        retry:
+          enabled: true
+      simple:
+        retry:
+          enabled: true
+
 server:
   port: 18081
 eureka:
