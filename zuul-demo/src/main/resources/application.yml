@@ -51,6 +51,8 @@ zuul:
   retryable: true
   #Zuul自带的Debug功能
   include-debug-header: true
+  # Cookie", "Set-Cookie", "Authorization"默认不转发，设置空就会转发
+  sensitive-headers:
 
 ribbon:        #设置ribbon的超时时间小于zuul的超时时间
 #  ReadTimeout: 10000
