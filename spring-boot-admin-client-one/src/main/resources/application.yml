@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: spring-boot-admin-client-one
+  boot:
+    admin:
+      client:
+        url: http://localhost:30000
+server:
+  port: 31000
+
+# spring-boot-starter-actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        # 默认info|health yml配置必须加''
+        include: '*'
+logging:
+  file:
+    name: log/spring-boot-admin-client-one.log
