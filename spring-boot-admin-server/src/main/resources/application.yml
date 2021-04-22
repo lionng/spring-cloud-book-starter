@@ -1,5 +1,28 @@
 spring:
   application:
     name: spring-boot-admin-server
+  security:
+    user:
+      name: admin
+      password: admin
 server:
   port: 30000
+
+eureka:
+  client:
+    register-with-eureka: false  #由于该应用为注册中心，所以设置为false,代表不详注册中心注册自己
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true  # 采用ip注册
+    #  定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 默认info|health yml配置必须加''
+        include:  '*'
