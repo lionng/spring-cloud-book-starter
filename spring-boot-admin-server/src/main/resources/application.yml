@@ -5,6 +5,27 @@ spring:
     user:
       name: admin
       password: admin
+  # 增加邮件服务器
+  mail:
+    host: smtp.qq.com
+    username: 154704230@qq.com
+    # https://tool.oschina.net/encrypt
+    # U2FsdGVkX1/lYnTbCNc92pBWenRCzNY6aRBRHxxnB9mfS6E0ivii0j98HlzjMjFt
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  boot:
+    admin:
+      notify:
+        mail:
+          to: f154704230@163.com
+          from: 154704230@qq.com
+
 server:
   port: 30000
 
