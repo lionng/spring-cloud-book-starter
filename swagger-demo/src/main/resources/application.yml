@@ -4,3 +4,28 @@ spring:
 
 server:
   port: 32000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true  # 采用ip注册
+    #  定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/swagger-ui/index.html
+
+# spring-boot-starter-actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        # 默认info|health yml配置必须加''
+        include: '*'
+
+logging:
+  file:
+    name: log/swagger-demo.log
+
